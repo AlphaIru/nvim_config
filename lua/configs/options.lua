@@ -5,5 +5,5 @@ vim.opt.shiftwidth = 4
 
 vim.diagnostic.enable()
 vim.diagnostic.config({
-	virtual_lines = true,
+	virtual_lines = false,
 })

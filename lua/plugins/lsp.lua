@@ -4,15 +4,14 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-			"WhoIsSethDaniel/mason-tool-installer.nvim", -- Add the plugin here!
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			"saghen/blink.cmp",
 		},
 		config = function()
-			-- 1. Setup Mason
 			require("mason").setup({
 				ui = { border = "rounded" },
 			})
 
-			-- 2. Setup LSPs (The bridge)
 			local servers = {
 				"lua_ls",
 				"ts_ls",
@@ -29,7 +28,6 @@ return {
 				automatic_installation = true,
 			})
 
-			-- 3. Setup Linters & Formatters (The Tool Installer)
 			require("mason-tool-installer").setup({
 				ensure_installed = {
 					"stylua",
@@ -48,7 +46,8 @@ return {
 				},
 			})
 
-			-- 4. Configure & Enable LSPs (0.11 style)
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+
 			vim.lsp.config("lua_ls", {
 				settings = {
 					Lua = {
@@ -58,6 +57,11 @@ return {
 				},
 			})
 
+			for _, server in ipairs(servers) do
+				if server ~= "lua_ls" then
+					vim.lsp.config(server, { capabilities = capabilities })
+				end
+			end
 			vim.lsp.enable(servers)
 
 			-- 5. Keybindings
