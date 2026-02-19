@@ -5,6 +5,7 @@ return {
 		opts = {
 			keymap = {
 				preset = "default",
+				["<Esc>"] = { "hide", "fallback" },
 				["<Tab>"] = { "select_and_accept", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
