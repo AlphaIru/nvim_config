@@ -4,7 +4,6 @@ return {
 	config = function()
 		local lint = require("lint")
 
-		-- 1. Map linters to filetypes
 		lint.linters_by_ft = {
 			python = { "flake8" },
 			javascript = { "eslint_d" },
@@ -18,17 +17,27 @@ return {
 			c = { "cppcheck" },
 		}
 
-		-- 2. Create an autocmd to trigger linting
-		-- This runs linting when you save, enter a buffer, or leave insert mode
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
 			group = lint_augroup,
 			callback = function()
-				lint.try_lint()
+				local ft = vim.bo.filetype
+				local linter_names = lint.linters_by_ft[ft] or {}
+
+				local valid_linters = {}
+				for _, name in ipairs(linter_names) do
+					local linter = lint.linters[name]
+					if linter and vim.fn.executable(linter.cmd) == 1 then
+						table.insert(valid_linters, name)
+					end
+				end
+
+				if #valid_linters > 0 then
+					lint.try_lint(valid_linters)
+				end
 			end,
 		})
 
-		-- 3. Optional: Manual lint keybinding
 		vim.keymap.set("n", "<leader>l", function()
 			lint.try_lint()
 		end, { desc = "Trigger linting for current file" })
