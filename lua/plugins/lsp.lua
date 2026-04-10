@@ -18,7 +18,7 @@ return {
 				"html",
 				"cssls",
 				"pyright",
-				"rust_analyzer",
+				-- "rust_analyzer",
 				"gopls",
 				"clangd",
 			}
@@ -26,6 +26,11 @@ return {
 			require("mason-lspconfig").setup({
 				ensure_installed = servers,
 				automatic_installation = true,
+				automatic_enable = {
+					exclude = {
+						"rust_analyzer",
+					},
+				},
 			})
 
 			require("mason-tool-installer").setup({
@@ -38,7 +43,7 @@ return {
 					"flake8",
 					"eslint_d",
 					"golangci-lint",
-					"codespell",
+					-- "codespell",
 					"shfmt",
 					"markdownlint",
 					"json-lsp",
@@ -69,11 +74,17 @@ return {
 				callback = function(args)
 					local opts = { buffer = args.buf, silent = true }
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+					-- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 				end,
 			})
 		end,
+	},
+
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^9",
+		lazy = false,
 	},
 }

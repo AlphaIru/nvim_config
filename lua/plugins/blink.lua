@@ -7,7 +7,7 @@ return {
 				preset = "default",
 				["<Esc>"] = { "hide", "fallback" },
 				["<Tab>"] = { "select_and_accept", "fallback" },
-				["<CR>"] = { "accept", "fallback" },
+				["<CR>"] = { "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
 				["<Up>"] = { "select_prev", "fallback" },
 			},
@@ -15,9 +15,12 @@ return {
 			completion = {
 				list = {
 					selection = {
-						auto_insert = true,
-						preselect = true,
+						auto_insert = false,
+						preselect = false,
 					},
+				},
+				ghost_text = {
+					enabled = false,
 				},
 			},
 
