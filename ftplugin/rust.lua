@@ -1,6 +1,6 @@
 local bufnr = vim.api.nvim_get_current_buf()
 vim.keymap.set("n", "<leader>a", function()
-	vim.cmd.rustlsp("codeaction") -- supports rust-analyzer's grouping
+	vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
 	-- or vim.lsp.buf.codeaction() if you don't want grouping.
 end, { silent = true, buffer = bufnr })
 vim.keymap.set("n", "<leader>xr", function()
