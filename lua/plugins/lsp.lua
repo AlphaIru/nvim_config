@@ -18,7 +18,7 @@ return {
 				"html",
 				"cssls",
 				"pyright",
-				"rust_analyzer",
+				-- "rust_analyzer",
 				"gopls",
 				"clangd",
 			}
@@ -26,6 +26,11 @@ return {
 			require("mason-lspconfig").setup({
 				ensure_installed = servers,
 				automatic_installation = true,
+				automatic_enable = {
+					exclude = {
+						"rust_analyzer",
+					},
+				},
 			})
 
 			require("mason-tool-installer").setup({
@@ -38,7 +43,7 @@ return {
 					"flake8",
 					"eslint_d",
 					"golangci-lint",
-					"codespell",
+					-- "codespell",
 					"shfmt",
 					"markdownlint",
 					"json-lsp",
@@ -75,5 +80,11 @@ return {
 				end,
 			})
 		end,
+	},
+
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^9",
+		lazy = false,
 	},
 }
