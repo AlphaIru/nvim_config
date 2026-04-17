@@ -12,9 +12,6 @@ return {
 			typescriptreact = { "eslint_d" },
 			go = { "golangci-lint" },
 			markdown = { "markdownlint" },
-			json = { "jsonlint" },
-			cpp = { "cppcheck" },
-			c = { "cppcheck" },
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -22,13 +19,24 @@ return {
 			group = lint_augroup,
 			callback = function()
 				local ft = vim.bo.filetype
-				local linter_names = lint.linters_by_ft[ft] or {}
+				if ft == "netrw" or ft == "" then
+					return
+				end
 
+				local linter_names = lint.linters_by_ft[ft] or {}
 				local valid_linters = {}
+
 				for _, name in ipairs(linter_names) do
 					local linter = lint.linters[name]
-					if linter and vim.fn.executable(linter.cmd) == 1 then
-						table.insert(valid_linters, name)
+
+					if linter and type(linter.cmd) == "string" then
+						if vim.fn.executable(linter.cmd) == 1 then
+							table.insert(valid_linters, name)
+						end
+					elseif type(name) == "string" then
+						if vim.fn.executable(name) == 1 then
+							table.insert(valid_linters, name)
+						end
 					end
 				end
 

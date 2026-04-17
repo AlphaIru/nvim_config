@@ -10,18 +10,18 @@ return {
 				python = { "black" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
-				html = { "prettier" },
+				html = {},
 				css = { "prettier" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				go = { "gofumpt" },
 				sh = { "shfmt" },
-				markdown = { "markdownlint" },
-				["*"] = { "codespell" },
+				markdown = { "markdownlint-cli2", "codespell" },
+				gitcommit = { "codespell" },
 			},
 			-- This makes it format the moment you save the file
 			format_on_save = {
-				lsp_fallback = true, -- If the formatter fails, try LSP formatting
+				lsp_format = "fallback",
 				async = false,
 				timeout_ms = 500,
 			},
@@ -30,7 +30,7 @@ return {
 		-- Optional: Manual format keybinding
 		vim.keymap.set({ "n", "v" }, "<leader>f", function()
 			conform.format({
-				lsp_fallback = true,
+				lsp_format = "fallback",
 				async = false,
 				timeout_ms = 500,
 			})
