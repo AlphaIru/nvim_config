@@ -18,7 +18,7 @@ return {
 		})
 
 		-- バッファ切り替え用のキーバインド（例：Tab / Shift+Tab）
-		vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>", { silent = true })
-		vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { silent = true })
+		vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { silent = true })
+		vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { silent = true })
 	end,
 }

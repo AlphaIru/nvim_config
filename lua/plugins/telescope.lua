@@ -24,7 +24,7 @@ return {
 		})
 
 		-- Load fzf extension for super fast searching
-		telescope.load_extension("fzf")
+		pcall(telescope.load_extension, "fzf")
 
 		-- Keymaps
 		local keymap = vim.keymap

@@ -25,12 +25,7 @@ return {
 
 			require("mason-lspconfig").setup({
 				ensure_installed = servers,
-				automatic_installation = true,
-				automatic_enable = {
-					exclude = {
-						"rust_analyzer",
-					},
-				},
+				automatic_enable = false,
 			})
 
 			require("mason-tool-installer").setup({
@@ -54,6 +49,7 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			vim.lsp.config("lua_ls", {
+				capabilities = capabilities,
 				settings = {
 					Lua = {
 						diagnostics = { globals = { "vim" } },
@@ -66,8 +62,9 @@ return {
 				if server ~= "lua_ls" then
 					vim.lsp.config(server, { capabilities = capabilities })
 				end
+				vim.lsp.enable(server)
 			end
-			vim.lsp.enable(servers)
+			-- vim.lsp.enable(servers)
 
 			-- 5. Keybindings
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -80,11 +77,5 @@ return {
 				end,
 			})
 		end,
-	},
-
-	{
-		"mrcjkb/rustaceanvim",
-		version = "^9",
-		lazy = false,
 	},
 }
